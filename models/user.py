@@ -1,7 +1,10 @@
 #!/usr/bin/python3
 """This module defines a class User"""
+import models
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String
+import sqlalchemy
+from sqlalchemy import Column, String, ForeignKey, Integer, Float
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
 
@@ -14,3 +17,9 @@ class User(BaseModel, Base):
     last_name = Column(String(128), nullable=False)
     places = relationship('Place', backref='user')
     reviews = relationship("Review", backref="user")
+
+    def __init__(self, *args, **kwargs):
+        """
+        inherit from base  and Basemodel init
+        """
+        super().__init__(*args, **kwargs)
