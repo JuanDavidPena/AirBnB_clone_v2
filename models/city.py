@@ -11,6 +11,6 @@ from sqlalchemy.orm import relationship
 
 class City(BaseModel):
     """ The city class, contains state ID and name """
-    state_id = Column(String(60), ForeignKey('states.id'), nullable=false)
-    name = Column(String(128), nullable=false)
+    state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
+    name = Column(String(128), nullable=False)
     __tablename__ = 'cities'
