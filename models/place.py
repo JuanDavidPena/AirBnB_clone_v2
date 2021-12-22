@@ -21,10 +21,9 @@ association_table = Table("place_amenity", Base.metadata,
                                  primary_key=True, nullable=False))
 
 
-class Place(BaseModel):
+class Place(BaseModel, Base):
     """ A place to stay """
     __tablename__ = 'places'
-
     city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
     user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
     name = Column(String(128), nullable=False)
@@ -35,10 +34,14 @@ class Place(BaseModel):
     price_by_night = Column(Integer, nullable=False, default=0)
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
+    reviews = relationship("Review", backref="place", cascade="delete")
+    amenities = relationship("Amenity", secondary="place_amenity",
+                             viewonly=True)
     amenity_ids = []
-    reviews = relationship('Review', backref='place')
-    amenities = relationship(
-        'Amenity', secondary=place_amenity, viewonly=False)
+
+    def __init__(self, *args, **kwargs):
+        """initializes Place"""
+        super().__init__(*args, **kwargs)
 
     if models.storage_type != "db":
         @property
@@ -60,6 +63,6 @@ class Place(BaseModel):
             return amenitylist
 
         @amenities.setter
-        def amenities(self, obj):
-            if type(obj) == Amenity:
-                self.amenity_ids.append(obj.id)
+        def amenities(self, value):
+            if type(value) == Amenity:
+                self.amenity_ids.append(value.id)
