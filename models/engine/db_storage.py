@@ -47,18 +47,18 @@ class DBStorage:
     def all(self, cls=None):
         """ query on the current database session (self.__session)
         all objects depending of the class name"""
-        d = {}
+        dict = {}
         if cls is None:
-            for c in self.all_classes:
-                c = eval(c)
-                for instance in self.__session.query(c).all():
+            for clas in self.all_classes:
+                clas = eval(clas)
+                for instance in self.__session.query(clas).all():
                     key = instance.__class__.__name__ + '.' + instance.id
-                    d[key] = instance
+                    dict[key] = instance
         else:
             for instance in self.__session.query(cls).all():
                 key = instance.__class__.__name__ + '.' + instance.id
-                d[key] = instance
-        return d
+                dict[key] = instance
+        return dict
 
     def new(self, obj):
         """
