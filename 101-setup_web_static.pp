@@ -28,7 +28,7 @@ file { ['/data', '/data/web_static', '/data/web_static/shared', '/data/web_stati
 
 file { '/data/web_static/releases/test/index.html':
   ensure  => 'present',
-  content => 'Hello AirBnb',
+  content => 'Holberton School',
   require =>  Package['nginx']
 }
 
