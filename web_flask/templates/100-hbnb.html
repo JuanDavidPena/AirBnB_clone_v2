@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<HTML>
+
+<HEAD>
+    <TITLE>AirBnB clone</TITLE>
+    <LINK rel="stylesheet" href="static/4-common.css">
+    <LINK rel="stylesheet" href="static/3-footer.css">
+    <LINK rel="stylesheet" href="static/3-header.css">
+    <LINK rel="stylesheet" href="static/6-filters.css">
+    <LINK rel="stylesheet" href="static/8-places.css">
+    <LINK rel="icon" href="static/images/icon.png">
+</HEAD>
+
+<BODY>
+    <HEADER>
+        <DIV class="logo" style="background-image: url('static/images/logo.png'); background-repeat: no-repeat;">
+        </DIV>
+    </HEADER>
+    <DIV class="container">
+
+        <SECTION class="filters">
+
+            <DIV class="location_panel">
+                <DIV class="locations">
+                    <H3> States </H3>
+                    <H4> &nbsp; </H4>
+                </DIV>
+                <DIV class="dropdown_states">
+                    <UL class="popover">
+                        {% for state in ls_states|sort(attribute="name") %}
+                        <LI><H2>{{ state.name }}</H2></LI>
+                        <LI></LI>
+                            <UL>
+                                {% for city in ls_cities|sort(attribute="name") %}
+                                {% if city.state_id == state.id %}
+                                <LI>{{ city.name }}</LI>
+                                {% endif %}
+                                {% endfor %}
+                            </UL>
+                        </LI>
+                        {% endfor %}
+                    </UL>
+                </DIV>
+            </DIV>
+
+            <DIV class="amenities_panel">
+                <DIV class="amenities_search">
+                    <H3> Amenities </H3>
+                    <H4> &nbsp; </H4>
+                </DIV>
+                <DIV class="dropdown_amenities">
+                    <UL class="popover">
+                        <UL>
+                            {% for amenity in ls_amenities %}
+                            <LI> {{ amenity.name }} </LI>
+                            {% endfor %}
+                        </UL>
+                    </UL>
+                </DIV>
+            </DIV>
+
+            <BUTTON>
+                Search
+            </BUTTON>
+
+        </SECTION>
+
+        <SECTION class="places">
+            <H1> Places </H1>
+            <UL class="list_places">
+                {% for place in ls_places|sort(attribute="name") %}
+                <LI>
+                    <ARTICLE>
+                        <DIV class="first_row">
+                            <H2 class="heading_places"> {{ place.name }} </H2>
+                            <DIV class="price_by_night">
+                                <P> ${{ place.price_by_night }} </P>
+                            </DIV>
+                        </DIV>
+                        <DIV class="information">
+                            <DIV class="max_guest"
+                                style="background-image: url('static/images/icon_group.png'); background-repeat: no-repeat;">
+                                <P class="information_headings"> {{ place.max_guest }} Guests </P>
+                            </DIV>
+
+                            <DIV class="number_rooms"
+                                style="background-image: url('static/images/icon_bed.png'); background-repeat: no-repeat;">
+                                <P class="information_headings"> {{ place.number_rooms }} Bedroom </P>
+                            </DIV>
+
+                            <DIV class="number_bathrooms"
+                                style="background-image: url('static/images/icon_bath.png'); background-repeat: no-repeat;">
+                                <P class="information_headings"> {{ place.number_bathrooms }} Bathroom </P>
+                            </DIV>
+                        </DIV>
+
+                        <DIV class="user">
+                            <P> <b>Owner</b>: {{ place.user.first_name }} {{ place.user.last_name }}</P>
+                        </DIV>
+
+                        <DIV class="description">
+                            <P>
+                                {{ place.description|safe }}
+                            </P>
+                        </DIV>
+                    </ARTICLE>
+                </LI>
+                {% endfor %}
+            </UL>
+        </SECTION>
+    </DIV>
+
+    <FOOTER>
+        <P> Holberton School </P>
+    </FOOTER>
+</BODY>
+
+</HTML>
